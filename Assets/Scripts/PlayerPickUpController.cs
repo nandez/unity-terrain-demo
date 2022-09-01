@@ -7,10 +7,12 @@ public class PlayerPickUpController : MonoBehaviour
     // que se accedan desde fuera de la clase.
 
     [SerializeField] private float pickupRange = 5f;
-    [SerializeField] private Transform pickupPoint;
+    [SerializeField] private Transform holdPoint;
     [SerializeField] private LayerMask pickableMask;
     [SerializeField] private float moveForce = 25f;
-    [SerializeField] private PlayerLookController lookCtrl;
+    [SerializeField] private float throwForce = 150f;
+    [SerializeField] private Camera cam;
+
 
     private GameObject pickedItem;
 
@@ -21,29 +23,29 @@ public class PlayerPickUpController : MonoBehaviour
         {
             if (pickedItem == null)
             {
-                // En este caso, el jugador no tiene ningun objeto agarrado;
-                // utilizando la dirección en la que se encuentra mirando
-                // el jugador, proyectamos un raycast de largo determinado por
-                // la propiedad "pickupRange", cuyo objetivo es colisionar con
-                // objetos que tengan asignada la capa especificada en la propiedad "pickableMask",
-                var direction = lookCtrl.transform.TransformDirection(Vector3.forward);
-
-                //Debug.DrawRay(transform.position, direction, Color.red, pickupRange);
+                // Como el jugador no tiene ningún objeto agarrado, proyectamos un rayo
+                // desde el centro de la pantalla hacia una longitud determinada por la propiedad
+                // pickupRange, para determinar si el mismo colisiona con algún objeto que tenga
+                // seteada la capa especificada en la propiedad "pickableMask".
+                Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0f));
                 RaycastHit hit;
-                if (Physics.Raycast(transform.position, direction, out hit, pickupRange, pickableMask))
+
+                if (Physics.Raycast(ray, out hit, pickupRange,  pickableMask))
                     PickUp(hit.transform.gameObject);
-            }
-            else
-            {
-                // En este caso, el jugador ya tiene un objeto agarrado, por lo que
-                // al presionar la tecla de agarre, soltamos el objeto.
-                DropItem();
             }
         }
 
         if (pickedItem != null)
         {
             MoveItem();
+        }
+
+
+        if(Input.GetButtonDown("Fire1") && pickedItem != null)
+        {
+            // En este caso, el jugador ya tiene un objeto agarrado, por lo que
+            // al presionar el botón de disparo, soltamos el objeto.
+            ThrowItem();
         }
     }
 
@@ -57,36 +59,48 @@ public class PlayerPickUpController : MonoBehaviour
             itemRb.useGravity = false;
             itemRb.drag = 10;
 
-            itemRb.transform.parent = pickupPoint;
+            itemRb.transform.SetParent(holdPoint);
             pickedItem = item;
         }
     }
 
-    private void DropItem()
+    private void ThrowItem()
     {
         if (pickedItem != null)
         {
+            // Resteamos el parent del objeto..
+            pickedItem.transform.SetParent(null);
+
             // Al soltar el objeto agarrado, le habilitamos la gravedad
             // y le restauramos el arrastre para que se comporte de forma normal.
             var pickedItemRb = pickedItem.GetComponent<Rigidbody>();
             pickedItemRb.useGravity = true;
-            pickedItemRb.drag = 1;
+            pickedItemRb.drag = 0;
 
-            // Le resteamos el parent y limpiamos la variable que nos indica
-            // que objeto estamos cargando.
-            pickedItem.transform.parent = null;
+            // Aplicamos una fuerza para lanzar al objeto.
+            pickedItemRb.AddForce(holdPoint.transform.forward * throwForce);
+
+            // Finalmente limpiamos la variable que nos indica que objeto estamos cargando.
             pickedItem = null;
         }
     }
 
     private void MoveItem()
     {
-        var itemDistance = Vector3.Distance(pickedItem.transform.position, pickupPoint.position);
+        var itemDistance = Vector3.Distance(pickedItem.transform.position, holdPoint.position);
 
         if (itemDistance > 0.1f)
         {
-            Vector3 moveDirection = pickupPoint.position - pickedItem.transform.position;
+            // Mientras el objeto se encuentre lejos del punto de sotén, calculamos la
+            // dirección de movimiento y aplicamos una fuerza para mover al objeto.
+            Vector3 moveDirection = holdPoint.position - pickedItem.transform.position;
             pickedItem.GetComponent<Rigidbody>().AddForce(moveDirection * moveForce);
+        }
+        else
+        {
+            // Una vez que el objeto esta próximo al punto de sostén, entonces
+            // reseteamos la propiedad velocity.
+            pickedItem.GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
     }
 }
