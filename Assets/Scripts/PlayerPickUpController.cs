@@ -14,7 +14,7 @@ public class PlayerPickUpController : MonoBehaviour
     [SerializeField] private Camera cam;
 
 
-    private GameObject pickedItem;
+    [SerializeField] private GameObject pickedItem;
 
     private void Update()
     {

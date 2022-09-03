@@ -1625,6 +1625,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pillar_Green
       objectReference: {fileID: 0}
+    - target: {fileID: 3138845241466120118, guid: b91a4b83ae5690842b711963a72be84a, type: 3}
+      propertyPath: m_Height
+      value: 5.1940837
+      objectReference: {fileID: 0}
+    - target: {fileID: 3138845241466120118, guid: b91a4b83ae5690842b711963a72be84a, type: 3}
+      propertyPath: m_Radius
+      value: 1.0446937
+      objectReference: {fileID: 0}
+    - target: {fileID: 3138845241466120118, guid: b91a4b83ae5690842b711963a72be84a, type: 3}
+      propertyPath: m_Center.x
+      value: -0.046613455
+      objectReference: {fileID: 0}
+    - target: {fileID: 3138845241466120118, guid: b91a4b83ae5690842b711963a72be84a, type: 3}
+      propertyPath: m_Center.y
+      value: 2.0171154
+      objectReference: {fileID: 0}
+    - target: {fileID: 3138845241466120118, guid: b91a4b83ae5690842b711963a72be84a, type: 3}
+      propertyPath: m_Center.z
+      value: 0.048672676
+      objectReference: {fileID: 0}
     - target: {fileID: 3936371745814381466, guid: b91a4b83ae5690842b711963a72be84a, type: 3}
       propertyPath: m_RootOrder
       value: 11
