@@ -37,26 +37,30 @@ public class PlayerInteractionController : MonoBehaviour
             var target = rHit.collider.gameObject;
 
             // Comparamos los tags del collider para mostrar el mensaje correspondiente.
-            if(target.CompareTag("Gemstone"))
+            if (target.CompareTag("Gemstone"))
             {
                 // Verificamos si el objeto puede levantarse, evitando por ejemplo, mostrar
                 // el mensaje de acción para el mismo objeto que estamos cargando.
                 var isPickable = pickupController.CanBePicked(target);
 
-                if(isPickable)
+                if (isPickable)
                     crosshairController.SetInteractiveState(actionKey.ToString(), "Pick Item");
 
-                if(Input.GetKeyDown(actionKey) && isPickable)
+                if (Input.GetKeyDown(actionKey) && isPickable)
                     pickupController.PickUpItem(target);
             }
-            else if(target.CompareTag("Golem"))
+            else if (target.CompareTag("Golem"))
             {
                 crosshairController.SetInteractiveState(actionKey.ToString(), "Talk");
+
+                // TODO: check if is talkable...
+                if (Input.GetKeyDown(actionKey))
+                    target.GetComponent<GolemController>().Talk();
             }
-            else if(target.CompareTag("ActivationPillar"))
+            else if (target.CompareTag("ActivationPillar"))
             {
                 crosshairController.SetInteractiveState(actionKey.ToString(), "Activate");
-                if(Input.GetKeyDown(actionKey))
+                if (Input.GetKeyDown(actionKey))
                     target.GetComponent<PillarController>().ActivateElement(pickupController.CurrentItem);
             }
         }
