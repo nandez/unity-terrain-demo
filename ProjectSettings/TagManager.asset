@@ -4,9 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - GreenStone
-  - BlueStone
-  - RedStone
+  - Gemstone
+  - Golem
+  - ActivationPillar
   layers:
   - Default
   - TransparentFX
@@ -16,7 +16,7 @@ TagManager:
   - UI
   - Player
   - Ground
-  - Pickable
+  - Interactive
   - 
   - 
   - 

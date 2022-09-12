@@ -23,8 +23,8 @@ public class PlayerLookController : MonoBehaviour
         var mouseX = Input.GetAxis("Mouse X") * mouseSensivity * Time.deltaTime;
         var mouseY = Input.GetAxis("Mouse Y") * mouseSensivity * Time.deltaTime;
 
-        // Utilizamos el valor del eje vertical del mouse, para establecer la rotaciÛn
-        // del objeto (en este caso la c·mara) y con clamp, nos aseguramos de proyectar
+        // Utilizamos el valor del eje vertical del mouse, para establecer la rotaci√≥n
+        // del objeto (en este caso la c√°mara) y con clamp, nos aseguramos de proyectar
         // el valor en un rango entre -90 y 90, para evitar que al mirar hacia arriba
         // o abajo, la camara siga rotando hacia atras.
         xRotation -= mouseY;
