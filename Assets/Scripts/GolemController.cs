@@ -75,7 +75,7 @@ public class GolemController : MonoBehaviour
         }
         else if (questMgr.CurrentQuestStatus == QuestStatus.COMPLETE)
         {
-            exclamationMark.SetActive(true);
+            exclamationMark.SetActive(false);
             questionMark.SetActive(false);
         }
     }
