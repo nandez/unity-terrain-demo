@@ -10,10 +10,14 @@ public class CrosshairController : MonoBehaviour
 
     [Header("Interactive Tooltip Settings")]
     [SerializeField] private GameObject interactionTooltip;
-
     [SerializeField] private TMPro.TMP_Text actionKey;
     [SerializeField] private TMPro.TMP_Text actionLabel;
 
+    private void Start()
+    {
+        // Bloqueamos el cursor para evitar hacer click fuera de la pantalla.
+        SetCursorLockState(CursorLockMode.Locked);
+    }
 
     public void SetInteractiveState(string key, string text)
     {
@@ -31,5 +35,16 @@ public class CrosshairController : MonoBehaviour
         this.interactionTooltip.SetActive(false);
         this.interactiveCrosshair.SetActive(false);
         this.normalCrosshair.SetActive(true);
+    }
+
+    public void HideCrosshair()
+    {
+        ResetState();
+        this.normalCrosshair.SetActive(false);
+    }
+
+    public void SetCursorLockState(CursorLockMode mode)
+    {
+        Cursor.lockState = mode;
     }
 }

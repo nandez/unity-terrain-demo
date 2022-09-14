@@ -53,7 +53,6 @@ public class PlayerInteractionController : MonoBehaviour
             {
                 crosshairController.SetInteractiveState(actionKey.ToString(), "Talk");
 
-                // TODO: check if is talkable...
                 if (Input.GetKeyDown(actionKey))
                     target.GetComponent<GolemController>().Talk();
             }

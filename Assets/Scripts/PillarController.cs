@@ -1,6 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
+[Serializable]
+public class PillarActivatedEvent : UnityEvent { }
 
 public class PillarController : MonoBehaviour
 {
@@ -12,6 +17,10 @@ public class PillarController : MonoBehaviour
     [SerializeField] private float stoneBounceFrequency = 1f;
     [SerializeField] private float stoneBounceAmplitude = 0.025f;
 
+    /// <summary>
+    /// Evento que se emite cuando se activa el pilar con la piedra correcta.
+    /// </summary>
+    public PillarActivatedEvent OnPillarActivated;
 
     private Vector3 stoneInitialPosition;
     private new Renderer renderer;
@@ -65,9 +74,12 @@ public class PillarController : MonoBehaviour
             activationGem.SetActive(false);
             Destroy(activationGem.gameObject);
 
-            // Finalmente reseteamos la capa del pilar para evitar
+            // Reseteamos la capa del pilar para evitar
             // que se pueda interactuar nuevamente.
             gameObject.layer = LayerMask.NameToLayer("Default");
+
+            // Finalmente emitimos un evento para notificar la activación.
+            OnPillarActivated?.Invoke();
         }
     }
 }

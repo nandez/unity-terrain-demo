@@ -11,12 +11,6 @@ public class PlayerLookController : MonoBehaviour
 
     private float xRotation = 0f;
 
-    private void Start()
-    {
-        // Bloqueamos el cursor para evitar hacer click fuera de la pantalla.
-        Cursor.lockState = CursorLockMode.Locked;
-    }
-
     private void Update()
     {
         // Obtenemos el input del mouse mediante los ejes y los normalizo
