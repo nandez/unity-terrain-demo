@@ -16,6 +16,7 @@ public class QuestManager : MonoBehaviour
     [Header("Quest Tracker Settings")]
     [SerializeField] private GameObject questTrackerPanel;
     [SerializeField] private TMPro.TMP_Text questTrackerMessage;
+    [SerializeField] private CanvasGroup questTrackerCanvasGroup;
 
     [Header("Pillar References")]
     [SerializeField] private PillarController firePillar;
@@ -24,6 +25,11 @@ public class QuestManager : MonoBehaviour
 
     [Header("Controller References")]
     [SerializeField] private CrosshairController crossHairCtrl;
+
+    [Header("Panel Fade Settings")]
+    [SerializeField] private float fadeDuration;
+
+
 
     public QuestStatus CurrentQuestStatus { get; private set; }
 
@@ -155,14 +161,14 @@ public class QuestManager : MonoBehaviour
         if (CurrentQuestStatus == QuestStatus.PENDING)
         {
             // Si la quest aun no ha sido aceptada.. no mostramos el tracker..
+            StartCoroutine(FadePanel(questTrackerCanvasGroup, 1, 0));
             questTrackerPanel.SetActive(false);
-            // TODO: investigar la posibilidad de simular un efecto de fade out.
         }
         else if (CurrentQuestStatus == QuestStatus.COMPLETE)
         {
             // La quest ya fue completada.. no mostramos el tracker..
+            StartCoroutine(FadePanel(questTrackerCanvasGroup, 1, 0));
             questTrackerPanel.SetActive(false);
-            // TODO: investigar la posibilidad de simular un efecto de fade out.
         }
         else
         {
@@ -172,7 +178,7 @@ public class QuestManager : MonoBehaviour
             if (!questTrackerPanel.activeInHierarchy)
             {
                 questTrackerPanel.SetActive(true);
-                // TODO: investigar la posibilidad de simular un efecto de fade in.
+                StartCoroutine(FadePanel(questTrackerCanvasGroup, 0, 1));
             }
             // Creamos los textos para representar el estado de activación de cada pilar.
             var trackerTextLines = new List<string>()
@@ -184,6 +190,19 @@ public class QuestManager : MonoBehaviour
 
             var objectivesText = string.Join(Environment.NewLine + Environment.NewLine, trackerTextLines);
             questTrackerMessage.SetText(objectivesText);
+        }
+    }
+
+    private IEnumerator FadePanel(CanvasGroup panel, float start, float end)
+    {
+        var counter = 0f;
+
+        while (counter < fadeDuration)
+        {
+            counter += Time.deltaTime;
+            panel.alpha = Mathf.Lerp(start, end, counter / fadeDuration);
+
+            yield return null;
         }
     }
 }
