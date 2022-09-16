@@ -9,9 +9,10 @@ public class CrosshairController : MonoBehaviour
     [SerializeField] private GameObject interactiveCrosshair;
 
     [Header("Interactive Tooltip Settings")]
-    [SerializeField] private GameObject interactionTooltip;
+    [SerializeField] private CanvasGroup interactionTooltip;
     [SerializeField] private TMPro.TMP_Text actionKey;
     [SerializeField] private TMPro.TMP_Text actionLabel;
+
 
     private void Start()
     {
@@ -23,7 +24,7 @@ public class CrosshairController : MonoBehaviour
     {
         this.actionKey.SetText(key);
         this.actionLabel.SetText(text);
-        this.interactionTooltip.SetActive(true);
+        this.interactionTooltip.alpha = 1;
         this.interactiveCrosshair.SetActive(true);
         this.normalCrosshair.SetActive(false);
     }
@@ -32,7 +33,7 @@ public class CrosshairController : MonoBehaviour
     {
         this.actionKey.SetText(string.Empty);
         this.actionLabel.SetText(string.Empty);
-        this.interactionTooltip.SetActive(false);
+        this.interactionTooltip.alpha = 0;
         this.interactiveCrosshair.SetActive(false);
         this.normalCrosshair.SetActive(true);
     }
