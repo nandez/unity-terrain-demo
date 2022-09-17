@@ -13,19 +13,20 @@ public class GolemController : MonoBehaviour
     [SerializeField] private float maxInteractionDistance = 17f;
     [SerializeField] private float rotationResetSpeed = 10f;
 
-    private bool isTalking = false;
+    public bool IsTalking { get; private set; }
     private Quaternion initialRotation;
 
     void Start()
     {
         // Guardamos la rotación original del golem
         initialRotation = transform.rotation;
+        IsTalking = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isTalking)
+        if (IsTalking)
         {
             // Determinamos la dirección en del jugador para girar el golem
             var playerDirection = player.position - transform.position;
@@ -39,6 +40,7 @@ public class GolemController : MonoBehaviour
             if (distanceToPlayer >= maxInteractionDistance)
             {
                 questMgr.CloseQuestPanel();
+                IsTalking = false;
             }
         }
         else
@@ -51,7 +53,7 @@ public class GolemController : MonoBehaviour
 
     public void Talk()
     {
-        isTalking = true;
+        IsTalking = true;
         questMgr.OpenQuestPanel();
     }
 

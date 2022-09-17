@@ -51,9 +51,14 @@ public class PlayerInteractionController : MonoBehaviour
             }
             else if (target.CompareTag("Golem"))
             {
-                crosshairController.SetInteractiveState(actionKey.ToString(), "Talk");
+                // Verificamos si ya hemos iniciado el dialogo para evitar mostrar
+                // el mensaje de accion.
+                var isTalking = target.GetComponent<GolemController>().IsTalking;
 
-                if (Input.GetKeyDown(actionKey))
+                if (!isTalking)
+                    crosshairController.SetInteractiveState(actionKey.ToString(), "Talk");
+
+                if (Input.GetKeyDown(actionKey) && !isTalking)
                     target.GetComponent<GolemController>().Talk();
             }
             else if (target.CompareTag("ActivationPillar"))

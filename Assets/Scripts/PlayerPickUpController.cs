@@ -11,7 +11,6 @@ public class PlayerPickUpController : MonoBehaviour
     [SerializeField] private float moveForce = 25f;
     [SerializeField] private float throwForce = 150f;
 
-
     public GameObject CurrentItem { get; private set; }
 
     private void Update()
@@ -29,7 +28,7 @@ public class PlayerPickUpController : MonoBehaviour
 
     public bool CanBePicked(GameObject item)
     {
-        return item != CurrentItem;
+        return CurrentItem == null;
     }
 
     public void PickUpItem(GameObject item)
@@ -75,18 +74,20 @@ public class PlayerPickUpController : MonoBehaviour
     {
         var itemDistance = Vector3.Distance(CurrentItem.transform.position, holdPoint.position);
 
+        var currentItemRb = CurrentItem.GetComponent<Rigidbody>();
+
         if (itemDistance > 0.1f)
         {
             // Mientras el objeto se encuentre lejos del punto de sotén, calculamos la
             // dirección de movimiento y aplicamos una fuerza para mover al objeto.
             Vector3 moveDirection = holdPoint.position - CurrentItem.transform.position;
-            CurrentItem.GetComponent<Rigidbody>().AddForce(moveDirection * moveForce);
+            currentItemRb.AddForce(moveDirection * moveForce);
         }
         else
         {
             // Una vez que el objeto esta próximo al punto de sostén, entonces
             // reseteamos la propiedad velocity.
-            CurrentItem.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            currentItemRb.velocity = Vector3.zero;
         }
     }
 }
