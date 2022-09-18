@@ -94,16 +94,18 @@ public class QuestManager : MonoBehaviour
     /// </summary>
     public void OnPillarActivatedHandler()
     {
-        // Actualizamos la lista de objetivos.
-        UpdateQuestTracker();
-
         // Si la quest se encuentra activa y todos los pilares estan activos,
         // marcamos la quest como resuelta.
-        if (CurrentQuestStatus == QuestStatus.ACTIVE && firePillar.IsActivated
-             && earthPillar.IsActivated && waterPillar.IsActivated)
+        if (CurrentQuestStatus == QuestStatus.ACTIVE
+            && firePillar.IsActivated
+            && earthPillar.IsActivated
+            && waterPillar.IsActivated)
         {
             CurrentQuestStatus = QuestStatus.RESOLVED;
         }
+
+        // Actualizamos la lista de objetivos.
+        UpdateQuestTracker();
     }
 
 
@@ -187,6 +189,9 @@ public class QuestManager : MonoBehaviour
                 $"- {(earthPillar.IsActivated ? "1" : "0")}/1 Earth Pillar",
                 $"- {(waterPillar.IsActivated ? "1" : "0")}/1 Water Pillar"
             };
+
+            if (CurrentQuestStatus == QuestStatus.RESOLVED)
+                trackerTextLines.Add($"- 0/1 Speak to Stone Watcher");
 
             var objectivesText = string.Join(Environment.NewLine + Environment.NewLine, trackerTextLines);
             questTrackerMessage.SetText(objectivesText);
