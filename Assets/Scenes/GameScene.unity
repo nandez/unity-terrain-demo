@@ -4373,6 +4373,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 737138754}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!137 &745127949 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 692738778369602075, guid: 698b97578df8e20449d9b8fbd5a7ff83, type: 3}
+  m_PrefabInstance: {fileID: 609976576301684995}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &745338588
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11231,6 +11236,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 692738778369602075, guid: 698b97578df8e20449d9b8fbd5a7ff83, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 692738778369602075, guid: 698b97578df8e20449d9b8fbd5a7ff83, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7ec185813450fc5448484da31540fd0a, type: 2}
+    - target: {fileID: 692738778369602075, guid: 698b97578df8e20449d9b8fbd5a7ff83, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7ec185813450fc5448484da31540fd0a, type: 2}
     - target: {fileID: 2084303451115487555, guid: 698b97578df8e20449d9b8fbd5a7ff83, type: 3}
       propertyPath: m_Size.x
       value: 4.2649403
@@ -11401,7 +11418,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3748889978932154491, guid: 92ad64ce7c7290b4695de5fd7476e956, type: 3}
       propertyPath: m_RootOrder
-      value: 28
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 3748889978932154491, guid: 92ad64ce7c7290b4695de5fd7476e956, type: 3}
       propertyPath: m_LocalScale.x
@@ -11417,7 +11434,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3748889978932154491, guid: 92ad64ce7c7290b4695de5fd7476e956, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.049999595
+      value: -0.5499996
       objectReference: {fileID: 0}
     - target: {fileID: 3748889978932154491, guid: 92ad64ce7c7290b4695de5fd7476e956, type: 3}
       propertyPath: m_LocalPosition.z
@@ -11475,6 +11492,8 @@ MonoBehaviour:
   player: {fileID: 171048432}
   maxInteractionDistance: 17
   rotationResetSpeed: 10
+  meshRenderer: {fileID: 745127949}
+  dissolveSpeed: 0.75
 --- !u!1001 &8505453095795801899
 PrefabInstance:
   m_ObjectHideFlags: 0

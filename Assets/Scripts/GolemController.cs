@@ -12,9 +12,12 @@ public class GolemController : MonoBehaviour
     [SerializeField] private Transform player;
     [SerializeField] private float maxInteractionDistance = 17f;
     [SerializeField] private float rotationResetSpeed = 10f;
+    [SerializeField] private SkinnedMeshRenderer meshRenderer;
+    [SerializeField] private float dissolveSpeed = 0.75f;
 
     public bool IsTalking { get; private set; }
     private Quaternion initialRotation;
+    private float dissolveTime = 0f;
 
     void Start()
     {
@@ -49,6 +52,32 @@ public class GolemController : MonoBehaviour
         }
 
         UpdateQuestMarkers();
+
+        if (questMgr.CurrentQuestStatus == QuestStatus.COMPLETE)
+        {
+            // Seteamos la variable en true para prevenir que el jugador
+            // intente hablar nuevamente cuando ya no hay dialogos disponibles.
+            IsTalking = true;
+
+            // Obtenemos el material del componente SkinnedMeshRenderer
+            // y modificamos la propiedad Cutoff paulatinamente hasta llegar
+            // a 1, para provocar el efecto en el shader.
+            var currentMaterials = meshRenderer.materials;
+            var initialCutoff = currentMaterials[0].GetFloat("_Cutoff");
+            var cutoffValue = Mathf.Sin(dissolveTime * dissolveSpeed);
+            currentMaterials[0].SetFloat("_Cutoff", cutoffValue);
+            dissolveTime += Time.deltaTime;
+            meshRenderer.materials = currentMaterials;
+
+            // Cuando el valor de cutoff es 1, el material es totalmente invisible
+            // por lo que desactivamos el gameobject y lo destruimos, para simular
+            // la desaparición del golem.
+            if (cutoffValue == 1)
+            {
+                gameObject.SetActive(false);
+                Destroy(this, 1f);
+            }
+        }
     }
 
     public void Talk()
@@ -80,5 +109,24 @@ public class GolemController : MonoBehaviour
             exclamationMark.SetActive(false);
             questionMark.SetActive(false);
         }
+    }
+
+    private IEnumerator DissolveEffect()
+    {
+        float time = 0;
+
+        var currentMaterials = meshRenderer.materials;
+        var initialCutoff = currentMaterials[0].GetFloat("_Cutoff");
+        while (time < dissolveSpeed)
+        {
+            var value = Mathf.Lerp(initialCutoff, 1, time / dissolveSpeed);
+            Debug.Log($"Initial Cutoff: {initialCutoff}, Value: {value}");
+
+            currentMaterials[0].SetFloat("_Cutoff", value);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        meshRenderer.materials = currentMaterials;
     }
 }
