@@ -8,7 +8,6 @@ public class RockZoneTriggerController : MonoBehaviour
     [SerializeField] private GameObject[] fallingRocks;
     [SerializeField] private ParticleSystem[] dustEffect;
 
-
     private void OnTriggerEnter(Collider coll)
     {
         // Verificamos si el jugador llega a la zona de acción
@@ -28,6 +27,11 @@ public class RockZoneTriggerController : MonoBehaviour
                 currentRockRb.useGravity = true;
                 currentRockRb.constraints = 0;
             }
+
+            // Una vez que activamos el trigger, desactivamos el gameobject
+            // evitar pasar nuevamente por el área y disparar el evento.
+            gameObject.SetActive(false);
+            Destroy(this, 1f);
         }
     }
 }
