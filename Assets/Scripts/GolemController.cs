@@ -12,8 +12,14 @@ public class GolemController : MonoBehaviour
     [SerializeField] private Transform player;
     [SerializeField] private float maxInteractionDistance = 17f;
     [SerializeField] private float rotationResetSpeed = 10f;
+
+    [Header("Dissolve Effect Settings")]
     [SerializeField] private SkinnedMeshRenderer meshRenderer;
     [SerializeField] private float dissolveSpeed = 0.75f;
+
+    [Header("Audio Settings")]
+    [SerializeField] private AudioSource greetingsSound;
+
 
     public bool IsTalking { get; private set; }
     private Quaternion initialRotation;
@@ -82,6 +88,7 @@ public class GolemController : MonoBehaviour
 
     public void Talk()
     {
+        greetingsSound.Play();
         IsTalking = true;
         questMgr.OpenQuestPanel();
     }

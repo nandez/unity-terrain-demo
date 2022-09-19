@@ -29,6 +29,11 @@ public class QuestManager : MonoBehaviour
     [Header("Panel Fade Settings")]
     [SerializeField] private float fadeDuration;
 
+    [Header("Audio Settings")]
+    [SerializeField] private AudioSource questAudioSource;
+    [SerializeField] private AudioClip openPanelSound;
+    [SerializeField] private AudioClip questAcceptedSound;
+    [SerializeField] private AudioClip questCompletedSound;
 
 
     public QuestStatus CurrentQuestStatus { get; private set; }
@@ -45,6 +50,8 @@ public class QuestManager : MonoBehaviour
 
     public void OpenQuestPanel()
     {
+        questAudioSource.PlayOneShot(openPanelSound);
+
         // Deshabilitamos la mira y mostramos el cursor para habilitar la selección en el hud.
         crossHairCtrl.HideCrosshair();
         crossHairCtrl.SetCursorLockState(CursorLockMode.Confined);
@@ -74,6 +81,7 @@ public class QuestManager : MonoBehaviour
             // automáticamente aceptamos la quest. Queda pendiente implementar un mecanismo para
             // aceptar / rechazar una quest.
             CurrentQuestStatus = QuestStatus.ACTIVE;
+            questAudioSource.PlayOneShot(questAcceptedSound);
             UpdateQuestTracker();
         }
         else if (CurrentQuestStatus == QuestStatus.RESOLVED)
@@ -81,6 +89,7 @@ public class QuestManager : MonoBehaviour
             // Al cerrar el panel de la quest, si la misma se encuentra resuelta
             // (todos los objetivos se cumplieron), la misma pasa a finalizada.
             CurrentQuestStatus = QuestStatus.COMPLETE;
+            questAudioSource.PlayOneShot(questCompletedSound);
             UpdateQuestTracker();
         }
 
@@ -94,6 +103,8 @@ public class QuestManager : MonoBehaviour
     /// </summary>
     public void OnPillarActivatedHandler()
     {
+        questAudioSource.PlayOneShot(questAcceptedSound);
+
         // Si la quest se encuentra activa y todos los pilares estan activos,
         // marcamos la quest como resuelta.
         if (CurrentQuestStatus == QuestStatus.ACTIVE

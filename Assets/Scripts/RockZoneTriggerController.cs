@@ -26,6 +26,11 @@ public class RockZoneTriggerController : MonoBehaviour
                 var currentRockRb = rock.GetComponent<Rigidbody>();
                 currentRockRb.useGravity = true;
                 currentRockRb.constraints = 0;
+
+                // Verificamos si la piedra tiene asignado un sonido, para ejecutarlo.
+                var currentRockAudioSrc = rock.GetComponent<AudioSource>();
+                if (currentRockAudioSrc != null)
+                    currentRockAudioSrc.Play();
             }
 
             // Una vez que activamos el trigger, desactivamos el gameobject
