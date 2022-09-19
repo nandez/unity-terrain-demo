@@ -996,6 +996,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 717185767}
   hud: {fileID: 1748402289}
+  questMgr: {fileID: 2004633172}
   interactionRange: 5
   interactionMask:
     serializedVersion: 2
@@ -1316,6 +1317,10 @@ PrefabInstance:
       propertyPath: gemLight
       value: 
       objectReference: {fileID: 165012236}
+    - target: {fileID: 5762281630814672192, guid: 155b504cd7927c743baae258aaa2ad7b, type: 3}
+      propertyPath: questMgr
+      value: 
+      objectReference: {fileID: 2004633172}
     - target: {fileID: 5762281630814672192, guid: 155b504cd7927c743baae258aaa2ad7b, type: 3}
       propertyPath: activationGem
       value: 
@@ -9510,6 +9515,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1786080795}
     - target: {fileID: 5762281630814672192, guid: 155b504cd7927c743baae258aaa2ad7b, type: 3}
+      propertyPath: questMgr
+      value: 
+      objectReference: {fileID: 2004633172}
+    - target: {fileID: 5762281630814672192, guid: 155b504cd7927c743baae258aaa2ad7b, type: 3}
       propertyPath: activationGem
       value: 
       objectReference: {fileID: 3317671500338434686}
@@ -11808,6 +11817,10 @@ PrefabInstance:
       propertyPath: gemLight
       value: 
       objectReference: {fileID: 8712137075818686922}
+    - target: {fileID: 5762281630814672192, guid: 155b504cd7927c743baae258aaa2ad7b, type: 3}
+      propertyPath: questMgr
+      value: 
+      objectReference: {fileID: 2004633172}
     - target: {fileID: 5762281630814672192, guid: 155b504cd7927c743baae258aaa2ad7b, type: 3}
       propertyPath: activationGem
       value: 
