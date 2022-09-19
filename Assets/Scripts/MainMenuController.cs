@@ -19,6 +19,7 @@ public class MainMenuController : MonoBehaviour
 
     private void Start()
     {
+        Cursor.lockState = CursorLockMode.Confined;
         stoneInitialPosition = pillarInnerStone.transform.position;
     }
     private void Update()

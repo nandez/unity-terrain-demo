@@ -13,7 +13,11 @@ public class PlayerLookController : MonoBehaviour
 
     private void Update()
     {
-        // Obtenemos el input del mouse mediante los ejes y los normalizo
+        // TODO: deshabilitar el comportamiento de apuntar cuando estamos en modo dialogo
+        // o con el mouse habilitado para interactuar con la GUI (ej: menu)
+
+
+        // Obtenemos el input del mouse mediante los ejes y los normalizamos
         var mouseX = Input.GetAxis("Mouse X") * mouseSensivity * Time.deltaTime;
         var mouseY = Input.GetAxis("Mouse Y") * mouseSensivity * Time.deltaTime;
 
