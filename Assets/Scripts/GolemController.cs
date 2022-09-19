@@ -69,10 +69,10 @@ public class GolemController : MonoBehaviour
             dissolveTime += Time.deltaTime;
             meshRenderer.materials = currentMaterials;
 
-            // Cuando el valor de cutoff es 1, el material es totalmente invisible
+            // Cuando el valor de cutoff alcanza los 0.9f, el material es totalmente invisible
             // por lo que desactivamos el gameobject y lo destruimos, para simular
             // la desaparición del golem.
-            if (cutoffValue == 1)
+            if (cutoffValue >= 0.9f)
             {
                 gameObject.SetActive(false);
                 Destroy(this, 1f);
