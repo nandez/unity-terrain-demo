@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
+    [Header("HUD References")]
+    [SerializeField] private Animator transition;
+    [SerializeField] private float transitionTime = 1f;
+
     [Header("Pillar Settings")]
     [SerializeField] private GameObject pillarInnerStone;
     [SerializeField] private float rotationDegreesPerSecond = 30f;
@@ -29,11 +33,18 @@ public class MainMenuController : MonoBehaviour
     }
     public void OnPlayButtonClick()
     {
-        SceneManager.LoadScene("GameScene");
+        StartCoroutine(nameof(LoadGameScene));
     }
 
     public void OnQuitButtonClick()
     {
         Application.Quit();
+    }
+
+    private IEnumerator LoadGameScene()
+    {
+        transition.SetTrigger("Start");
+        yield return new WaitForSeconds(transitionTime);
+        SceneManager.LoadScene("GameScene");
     }
 }
