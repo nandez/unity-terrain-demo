@@ -14,7 +14,7 @@ public class GameMenuController : MonoBehaviour
     {
         // Si apretamos la tecla escape y no estamos en modo dialogo, entonces
         // abrimos / cerramos el menu dependiendo del estado actual.
-        if (Input.GetKeyDown(KeyCode.Escape) && !golemCtrl.IsTalking)
+        if (Input.GetKeyDown(KeyCode.Escape) && (golemCtrl == null || !golemCtrl.IsTalking))
         {
             if (isPaused)
             {
