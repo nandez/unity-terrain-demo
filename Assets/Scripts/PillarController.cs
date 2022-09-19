@@ -9,6 +9,7 @@ public class PillarActivatedEvent : UnityEvent { }
 
 public class PillarController : MonoBehaviour
 {
+    [SerializeField] private QuestManager questMgr;
     [SerializeField] private GameObject activationGem;
 
     [Header("Inner Stone Settings")]
@@ -60,8 +61,9 @@ public class PillarController : MonoBehaviour
 
     public void ActivateElement(GameObject activationGem)
     {
-        // Verificamos si la gema es la correcta
-        if (activationGem == this.activationGem && !IsActivated)
+        // Verificamos si la gema es la correcta, si la quest se encuentra activa y si el pilar no se
+        // ha activado aún.
+        if (activationGem == this.activationGem && !IsActivated && questMgr.CurrentQuestStatus != QuestStatus.PENDING)
         {
             // Activamos la piedra flotante..
             IsActivated = true;

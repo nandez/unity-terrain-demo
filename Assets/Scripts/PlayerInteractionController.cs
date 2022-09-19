@@ -5,8 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerPickUpController))]
 public class PlayerInteractionController : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private Camera cam;
     [SerializeField] private GameObject hud;
+    [SerializeField] private QuestManager questMgr;
 
     [Header("Interaction Settings")]
     [SerializeField] private float interactionRange = 5f;
@@ -63,9 +65,14 @@ public class PlayerInteractionController : MonoBehaviour
             }
             else if (target.CompareTag("ActivationPillar"))
             {
-                crosshairController.SetInteractiveState(actionKey.ToString(), "Activate");
-                if (Input.GetKeyDown(actionKey))
-                    target.GetComponent<PillarController>().ActivateElement(pickupController.CurrentItem);
+                // Verificamos is la quest se encuentra activa para poder interactuar con el pilar.
+                if (questMgr.CurrentQuestStatus != QuestStatus.PENDING)
+                {
+                    crosshairController.SetInteractiveState(actionKey.ToString(), "Activate");
+
+                    if (Input.GetKeyDown(actionKey))
+                        target.GetComponent<PillarController>().ActivateElement(pickupController.CurrentItem);
+                }
             }
         }
         else
